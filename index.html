@@ -12,9 +12,75 @@
 
     <div class="container">
 
+        <h1 class="title">Tic-Tac-Toe!</h1>
+
+        <div class="game-top">
+            <button class="btn btn-primary" id="play">
+                Play
+            </button>
+        </div>
+
         <div class="game-board">
         </div>
 
+    </div>
+
+    <div class="modal-container">
+        <div class="modal">
+            <form action="#" method="GET">
+                <fieldset class="game-form">
+                    <legend class="form-title">Game Settings</legend>
+
+                    <div>
+                        <label for="player1-name">Player Ones Name</label>
+                        <input 
+                            type="text" 
+                            id="player1-name" 
+                            placeholder="Enter name..."
+                            value="Player One"
+                            minlength="1"
+                            maxlength="50"
+                        >
+                    </div>
+
+                    <div>
+                        <fieldset>
+                            <legend class="symbol-title">Player Ones Symbol</legend>
+                            <div>
+                                <div class="radio-item">
+                                    <label for="X" class="radio-label">X</label>
+                                    <input type="radio" name="symbol" id="X" value="X" required>
+                                </div>
+                                <div class="radio-item">
+                                    <label for="O" class="radio-label">O</label>
+                                    <input type="radio" name="symbol" id="O" value="O">
+                                </div>
+                            </div>
+                        </fieldset>
+                    </div>
+
+                    <div>
+                        <label for="player2-name">Player Twos Name</label>
+                        <input 
+                            type="text" 
+                            id="player2-name" 
+                            placeholder="Enter name..."
+                            value="Player Two"
+                            minlength="1"
+                            maxlength="50"
+                        >
+                    </div>
+
+                </fieldset>
+
+                <div class="btn-container">
+                    <button type="submit" class="btn btn-outline modal-btn" id="start">Start</button>
+                </div>
+
+                <button id="close-modal">&times;</button>
+
+            </form>
+        </div>
     </div>
 
 </body>
