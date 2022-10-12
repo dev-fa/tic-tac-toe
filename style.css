@@ -42,6 +42,14 @@ body {
     height: 500px;
 }
 
+.player-status {
+    background: var(--clr-primary);
+    color: #fff;
+    font-size: 18px;
+    font-weight: 700;
+    padding: 8px;
+}
+
 .box {
     display: flex;
     justify-content: center;
@@ -93,95 +101,4 @@ body {
 
 #play {
     margin-bottom: 8px;
-}
-
-/* MODAL */
-fieldset {
-    border: none;
-}
-
-input[type="text"] {
-    padding: 4px;
-    width: 100%;
-    border-radius: 4px;
-    border: 1px solid #A9A9A9;
-    background-color: #F5F5F5;
-}
-
-label,
-.symbol-title {
-    font-size: 13px;
-    font-weight: 600;
-    margin-bottom: 4px;
-}
-
-.modal-container {
-    display: none;
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 1;
-    justify-content: center;
-    align-items: center;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.2);
-}
-
-.modal {
-    position: relative;
-    width: 250px;
-    /* height: 400px; */
-    padding: 24px 8px;
-    border-radius: 6px;
-    background-color: #fff;
-    box-shadow: 2px 2px 1px 0 rgba(0, 0, 0, 0.3);
-}
-
-.game-form {
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-}
-
-.form-title {
-    margin-bottom: 24px;
-    font-size: 24px;
-    font-weight: 700;
-    text-align: center;
-}
-
-.btn-container {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-}
-
-.modal-btn {
-    margin-top: 24px;
-}
-
-.radio-label {
-    font-weight: 400;
-    font-size: 13px;
-    margin: 0;
-    width: 11px;
-}
-
-.radio-item {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-#close-modal {
-    position: absolute;
-    top: 0;
-    right: 8px;
-    color: red;
-    background: none;
-    border: none;
-    font-size: 20px;
-    font-weight: 700;
-    cursor: pointer;
 }

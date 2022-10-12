@@ -10,6 +10,25 @@ const gameBoard = (function () {
         boardArr.splice(box, 1, symbol);
     };
 
+    /* 3 IN A ROW
+
+    SIDES
+    i0 + i1 + i2
+    i0 + i3 + i6
+    i6 + i7 + i8
+    i2 + i5 + i8
+    CENTER
+    i1 + i4 + i7
+    i3 + i4 + i5
+    DIAGONAL
+    i0 + i4 + i8
+    i2 + i4 + i6
+    */
+
+    const checkWin = () => {
+        
+    }
+
     return {
         updateBoard,
         boardArr
@@ -21,6 +40,7 @@ const gameBoard = (function () {
 const displayController = (function() {
 
     const displayBoard = board => {
+        displayPlayer();
         const boardContainer = document.querySelector(".game-board");
         while (boardContainer.firstChild) {
             boardContainer.removeChild(boardContainer.lastChild);
@@ -30,32 +50,52 @@ const displayController = (function() {
             let boxElement = document.createElement("div");
             boxElement.classList.add("box");
             boxElement.setAttribute("id", `box-${box}`);
-            boxElement.addEventListener("click", _addSymbol)
+            boxElement.addEventListener("click", addSymbol)
             boardContainer.appendChild(boxElement);
         }
     };
 
-    const _addSymbol = function (e) {
+    const displayPlayer = () => {
+        let currentPlayer;
+        if (game.currentSymbol[0] === "X") {
+            currentPlayer = "Player 1";
+        } else {
+            currentPlayer = "Player 2";
+        }
+
+        const infoContainer = document.querySelector(".game-info");
+        while (infoContainer.firstChild) {
+            infoContainer.removeChild(infoContainer.lastChild);
+        }
+        let playerStatus = document.createElement("p");
+        playerStatus.classList.add("player-status");
+        playerStatus.textContent = `It is ${currentPlayer}'s turn!`;
+        infoContainer.appendChild(playerStatus);
+    };
+
+    const addSymbol = function (e) {
         if (e.target.textContent !== "") {
             alert("Box is already taken");
         } else {
-            let playerSymbol = "X";
+            displayPlayer();
+            let playerSymbol = game.currentSymbol[0];
             e.target.textContent = playerSymbol;
             let boxIndex = e.target.id;
             boxIndex = boxIndex.substr(boxIndex.length-1);
             gameBoard.updateBoard(boxIndex, playerSymbol);
-            console.log(gameBoard.boardArr);
+            game.updateTurn();
+            displayPlayer();
         }
     }
 
     return {
-        displayBoard
+        displayBoard,
     };
 
 })();
 
 
-const player =  function(name) {
+const player = function (name) {
     
     return {
        name
@@ -64,41 +104,29 @@ const player =  function(name) {
 };
 
 
-// const game = ( function () {
+const game = (function () {
 
-//     const play = () => {
-        
-//     };
+    let currentSymbol = ["X"];
 
+    const play = () => {
+        displayController.displayBoard(gameBoard.boardArr);
+    };
 
-//     return {
-//         play
-//     };
-
-// })();
-
-
-// MODAL
-const modal = ( function() {
-
-    const modalContainer = document.querySelector(".modal-container");
-    const openModal = document.getElementById("play");
-    const closeModal = document.getElementById("close-modal");
-
-    openModal.addEventListener("click", () => {
-        modalContainer.setAttribute("style", "display: flex; justify-content:center; align-items: center;");
-    });
-
-    closeModal.addEventListener("click", () => {
-        modalContainer.style.display = "none";
-    });
-
-    window.addEventListener("click", outsideClick);
-
-    function outsideClick(e) {
-        if (e.target == modalContainer) {
-            modalContainer.style.display = "none";
+    const updateTurn = () => {
+        if (currentSymbol[0] === "X") {
+            currentSymbol.splice(0, 1, "O");
+        } else {
+            currentSymbol.splice(0, 1, "X");
         }
+    };
+
+    return {
+        play,
+        updateTurn,
+        currentSymbol
     }
 
 })();
+
+
+document.getElementById("play").addEventListener("click", game.play);
