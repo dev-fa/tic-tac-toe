@@ -4,10 +4,11 @@ const gameBoard = (function () {
         "", "", "",
         "", "", "",
         "", "", ""
-    ]
+    ];
 
     const updateBoard = (box, symbol) => {
         boardArr.splice(box, 1, symbol);
+        checkWin(symbol);
     };
 
     /* 3 IN A ROW
@@ -25,9 +26,82 @@ const gameBoard = (function () {
     i2 + i4 + i6
     */
 
-    const checkWin = () => {
+    const checkWin = (symbol) => {
+        if (boardArr[0] === symbol && boardArr[1] === symbol &&
+            boardArr[2] === symbol) {
+
+            if (symbol === "X") {
+                console.log("player 1 wins");
+            } else if (symbol === "O") {
+                console.log("player 2 wins");
+            }
+
+        } else if (boardArr[0] === symbol && boardArr[3] === symbol &&
+            boardArr[6] === symbol) {
+            
+            if (symbol === "X") {
+                console.log("player 1 wins");
+            } else if (symbol === "O") {
+                console.log("player 2 wins");
+            }
+
+        } else if (boardArr[6] === symbol && boardArr[7] === symbol &&
+            boardArr[8] === symbol) {
+            
+            if (symbol === "X") {
+                console.log("player 1 wins");
+            } else if (symbol === "O") {
+                console.log("player 2 wins");
+            }
+            
+        } else if (boardArr[2] === symbol && boardArr[5] === symbol &&
+            boardArr[8] === symbol) {
+            
+            if (symbol === "X") {
+                console.log("player 1 wins");
+            } else if (symbol === "O") {
+                console.log("player 2 wins");
+            }
+            
+        } else if (boardArr[1] === symbol && boardArr[4] === symbol &&
+            boardArr[7] === symbol) {
+            
+            if (symbol === "X") {
+                console.log("player 1 wins");
+            } else if (symbol === "O") {
+                console.log("player 2 wins");
+            }
+            
+        } else if (boardArr[3] === symbol && boardArr[4] === symbol &&
+            boardArr[5] === symbol) {
+            
+            if (symbol === "X") {
+                console.log("player 1 wins");
+            } else if (symbol === "O") {
+                console.log("player 2 wins");
+            }
+            
+        } else if (boardArr[0] === symbol && boardArr[4] === symbol &&
+            boardArr[8] === symbol) {
+            
+            if (symbol === "X") {
+                console.log("player 1 wins");
+            } else if (symbol === "O") {
+                console.log("player 2 wins");
+            }
+            
+        } else if (boardArr[2] === symbol && boardArr[4] === symbol &&
+            boardArr[6] === symbol) {
+            
+            if (symbol === "X") {
+                console.log("player 1 wins");
+            } else if (symbol === "O") {
+                console.log("player 2 wins");
+            }
+            
+        }
         
-    }
+    };
 
     return {
         updateBoard,
@@ -86,10 +160,10 @@ const displayController = (function() {
             game.updateTurn();
             displayPlayer();
         }
-    }
+    };
 
     return {
-        displayBoard,
+        displayBoard
     };
 
 })();
