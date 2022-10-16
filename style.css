@@ -12,6 +12,11 @@
     box-sizing: border-box;
 }
 
+*:enabled,
+*:disabled {
+    background-color: inherit;
+}
+
 body {
     font-family: Arial, Helvetica, sans-serif;
     background-color: var(--clr-background);
@@ -42,12 +47,20 @@ body {
     height: 500px;
 }
 
-.player-status {
+.player-status,
+.winner-status {
+    text-align: center;
     background: var(--clr-primary);
     color: #fff;
     font-size: 18px;
-    font-weight: 700;
+    font-weight: 500;
     padding: 8px;
+}
+
+.winner-status {
+    font-weight: 700;
+    font-size: 24px;
+    width: 500px;
 }
 
 .box {
@@ -99,6 +112,7 @@ body {
     transition: transform 0.1s;
 }
 
-#play {
+#play,
+#play-again {
     margin-bottom: 8px;
 }
