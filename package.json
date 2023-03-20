@@ -1,0 +1,29 @@
+{
+  "name": "tic-tac-toe",
+  "version": "1.0.0",
+  "description": "Tic-tac-toe in JavaScript",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "webpack --progress --watch",
+    "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dev-fa/tic-tac-toe.git"
+  },
+  "author": "dev-fa",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dev-fa/tic-tac-toe/issues"
+  },
+  "homepage": "https://github.com/dev-fa/tic-tac-toe#readme",
+  "devDependencies": {
+    "eslint": "^8.36.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-config-prettier": "^8.7.0",
+    "eslint-plugin-import": "^2.27.5",
+    "webpack": "^5.76.2",
+    "webpack-cli": "^5.0.1"
+  }
+}
