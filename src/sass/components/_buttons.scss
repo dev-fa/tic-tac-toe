@@ -90,14 +90,19 @@
 .btn-restart {
   align-items: center;
   background-color: var(--clr-silver);
-  border-bottom: 3px solid var(--clr-silver-shadow);
+  border-bottom: 4px solid var(--clr-silver-shadow);
   border-radius: 5px;
   display: flex;
   justify-content: center;
+  justify-self: end;
+  max-height: 40px;
+  max-width: 40px;
   min-height: 40px;
   min-width: 40px;
 
   @include breakpoint(medium) {
+    max-height: 52px;
+    max-width: 52px;
     min-height: 52px;
     min-width: 52px;
   }

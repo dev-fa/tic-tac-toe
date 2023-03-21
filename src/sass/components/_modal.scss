@@ -1,0 +1,96 @@
+@use '../abstracts/' as *;
+
+.modal {
+  align-items: center;
+  background-color: var(--clr-dark-navy-lighter);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  left: 0;
+  min-height: 228px;
+  min-width: 100vw;
+  position: fixed;
+  top: 50%;
+  transform: translateY(-50%) scale(0);
+  transition: 0.2s ease-in-out;
+  z-index: 10;
+
+  @include breakpoint(medium) {
+    min-height: 266px;
+  }
+
+  &--active {
+    @extend .modal;
+
+    transform: translateY(-50%) scale(1);
+  }
+
+  &__text {
+    color: var(--clr-silver);
+    font-size: rem(14);
+    font-weight: 700;
+    margin-bottom: 16px;
+
+    @include breakpoint(medium) {
+      font-size: rem(16);
+    }
+  }
+
+  &__heading {
+    display: flex;
+    font-size: rem(24);
+    font-weight: 700;
+    gap: 10px;
+    margin-bottom: 24px;
+
+    @include breakpoint(medium) {
+      font-size: rem(40);
+      gap: 24px;
+    }
+
+    & > img {
+      max-height: 28px;
+      max-width: 28px;
+
+      @include breakpoint(medium) {
+        max-height: 64px;
+        max-width: 64px;
+      }
+    }
+
+    &--blue {
+      @extend .modal__heading;
+
+      color: var(--clr-blue);
+    }
+
+    &--yellow {
+      @extend .modal__heading;
+
+      color: var(--clr-yellow);
+    }
+  }
+
+  &__buttons {
+    display: flex;
+    gap: 16px;
+  }
+}
+
+.modal-overlay {
+  background-color: rgba(0, 0, 0, 0.5);
+  bottom: 0;
+  left: 0;
+  opacity: 0;
+  pointer-events: none;
+  position: fixed;
+  right: 0;
+  top: 0;
+
+  &--active {
+    @extend .modal-overlay;
+
+    opacity: 1;
+    pointer-events: all;
+  }
+}

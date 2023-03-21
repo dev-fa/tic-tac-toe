@@ -1,0 +1,24 @@
+@use '../abstracts/' as *;
+
+.game-container {
+  display: flex;
+  flex-direction: column;
+  max-width: 460px;
+
+  &__top {
+    display: grid;
+    gap: 20px;
+    grid-template-columns: repeat(3, 96px);
+    margin-bottom: 64px;
+    width: 100%;
+
+    @include breakpoint(medium) {
+      grid-template-columns: repeat(3, 140px);
+      margin-bottom: 20px;
+    }
+
+    @include breakpoint-down(xsmall) {
+      gap: 8px;
+    }
+  }
+}

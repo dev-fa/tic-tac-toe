@@ -1,0 +1,76 @@
+@use '../abstracts/' as *;
+
+.game {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: repeat(3, auto);
+  grid-template-rows: repeat(4, auto);
+
+  @include breakpoint-down(xsmall) {
+    gap: 8px;
+  }
+
+  &__box {
+    align-items: center;
+    background-color: var(--clr-dark-navy-lighter);
+    border-bottom: 8px solid var(--clr-dark-navy-shadow);
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    min-height: 96px;
+    min-width: 96px;
+
+    @include breakpoint(medium) {
+      min-height: 140px;
+      min-width: 140px;
+    }
+
+    & > img {
+      max-height: 40px;
+      max-width: 40px;
+
+      @include breakpoint(medium) {
+        max-height: 64px;
+        max-width: 64px;
+      }
+    }
+  }
+
+  &__stats {
+    min-height: 64px;
+    min-width: 96px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    @include breakpoint(medium) {
+      min-height: 72px;
+      min-width: 140px;
+    }
+
+    &--blue {
+      @extend .game__stats;
+
+      background-color: var(--clr-blue);
+    }
+
+    &--silver {
+      @extend .game__stats;
+
+      background-color: var(--clr-silver);
+    }
+
+    &--yellow {
+      @extend .game__stats;
+
+      background-color: var(--clr-yellow);
+    }
+  }
+
+  &__label,
+  &__score {
+    color: var(--clr-dark-navy);
+  }
+}

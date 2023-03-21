@@ -1,0 +1,30 @@
+@use '../abstracts/' as *;
+
+.game-turn {
+  background-color: var(--clr-dark-navy-lighter);
+  border-bottom: 4px solid var(--clr-dark-navy-shadow);
+  border-radius: 5px;
+  color: var(--clr-silver);
+  display: flex;
+  font-size: rem(14);
+  font-weight: 700;
+  gap: 9px;
+  padding: 9px 15px;
+  text-align: center;
+
+  @include breakpoint(medium) {
+    font-size: rem(16);
+    gap: 13px;
+    padding: 15px 30px;
+  }
+
+  & > img {
+    max-height: 16px;
+    max-width: 16px;
+
+    @include breakpoint(medium) {
+      max-height: 20px;
+      max-width: 20px;
+    }
+  }
+}
