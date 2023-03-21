@@ -6,15 +6,44 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <!-- FONT IMPORTS -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;700&display=swap" rel="stylesheet">
   <!-- IMPORTANT -->
   <link rel="icon" type="image/x-icon" href="./assets/favicon.ico">
-  <title>Document</title>
-  <!-- <link rel="stylesheet" href="./style.css"> -->
+  <title>Tic Tac Toe</title>
+  <link rel="stylesheet" href="./style.css">
   <!-- <script src="main.js" defer></script> -->
 </head>
 
 <body>
-  <h1>Title</h1>
+  <main>
+    <h1 class="sr-only">Tic-tac-toe</h1>
+
+    <section class="new-game-menu">
+      <h2 class="sr-only">New Game Menu</h2>
+      <img src="./assets/logo.svg" alt="Game Logo" class="logo">
+
+      <div class="game-choice">
+        <p class="game-choice__title heading-xs">PICK PLAYER 1'S MARK</p>
+        <div class="game-choice__options">
+          <div class="game-choice__option">
+            <img src="./assets/icon-x-silver.svg" alt="Choose X Option">
+          </div>
+          <div class="game-choice__option--active no-hover">
+            <img src="./assets/icon-o-navy.svg" alt="Choose O Option">
+          </div>
+        </div>
+        <p class="game-choice__text body-text">REMEMBER: X GOES FIRST</p>
+      </div>
+
+      <div class="new-game-menu__buttons">
+        <button type="button" class="btn-primary--yellow">NEW GAME (VS CPU)</button>
+        <button type="button" class="btn-primary--blue">NEW GAME (VS PLAYER)</button>
+      </div>
+    </section>
+
+  </main>
 </body>
 
 </html>

@@ -1,0 +1,12 @@
+@use '../abstracts/' as *;
+
+main {
+  align-items: center;
+  background-color: var(--clr-dark-navy);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  max-height: inherit;
+  min-height: inherit;
+  padding: 24px;
+}

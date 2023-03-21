@@ -1,0 +1,68 @@
+@use '../abstracts/' as *;
+
+.game-choice {
+  background-color: var(--clr-dark-navy-lighter);
+  border-bottom: 8px solid var(--clr-dark-navy-shadow);
+  border-radius: 15px;
+  padding: 24px 32px;
+  width: 100%;
+
+  &__title,
+  &__text {
+    color: var(--clr-silver);
+    text-align: center;
+  }
+
+  &__title {
+    margin-bottom: 24px;
+
+    @include breakpoint(large) {
+      margin-bottom: 33px;
+    }
+  }
+
+  &__options {
+    background-color: var(--clr-dark-navy);
+    border-radius: 10px;
+    display: flex;
+    margin-bottom: 17px;
+    padding: 8px;
+    width: 100%;
+
+    @include breakpoint(large) {
+      margin-bottom: 26px;
+    }
+  }
+
+  &__option {
+    align-items: center;
+    border-radius: 10px;
+    cursor: pointer;
+    display: flex;
+    height: 54px;
+    justify-content: center;
+    width: 100%;
+
+    &:hover {
+      background-color: rgba($color: hsl(198, 23%, 72%), $alpha: 0.05);
+      transition: background-color 0.1s ease-in-out;
+    }
+
+    & > img {
+      fill: var(--clr-silver);
+      max-height: 32px;
+      max-width: 32px;
+      pointer-events: none;
+    }
+
+    &--active {
+      @extend .game-choice__option;
+
+      background-color: var(--clr-silver);
+    }
+  }
+
+  &__text {
+    opacity: 0.4;
+  }
+}

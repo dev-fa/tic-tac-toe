@@ -1,0 +1,119 @@
+@use '../abstracts/' as *;
+
+.btn-primary,
+.btn-secondary,
+.btn-restart {
+  cursor: pointer;
+}
+
+.btn-primary {
+  border-bottom: 8px solid;
+  border-radius: 15px;
+  color: var(--clr-dark-navy);
+  font-size: rem(16);
+  font-weight: 700;
+  letter-spacing: 1.25;
+  max-width: 460px;
+  padding: 17px;
+  text-align: center;
+  text-transform: uppercase;
+  width: 100%;
+
+  @include breakpoint(medium) {
+    font-size: rem(20);
+  }
+
+  &--yellow {
+    @extend .btn-primary;
+
+    background-color: var(--clr-yellow);
+    border-bottom-color: var(--clr-yellow-shadow);
+
+    &:hover {
+      background-color: var(--clr-yellow-hover);
+      transition: background-color 0.1s ease-in-out;
+    }
+  }
+
+  &--blue {
+    @extend .btn-primary;
+
+    background-color: var(--clr-blue);
+    border-bottom-color: var(--clr-blue-shadow);
+
+    &:hover {
+      background-color: var(--clr-blue-hover);
+      transition: background-color 0.1s ease-in-out;
+    }
+  }
+}
+
+.btn-secondary {
+  border-bottom: 4px solid;
+  border-radius: 10px;
+  color: var(--clr-dark-navy);
+  font-size: rem(16);
+  font-weight: 700;
+  padding: 16px;
+  text-align: center;
+  text-transform: uppercase;
+
+  @include breakpoint(medium) {
+    font-size: rem(20);
+  }
+
+  &--yellow {
+    @extend .btn-secondary;
+
+    background-color: var(--clr-yellow);
+    border-bottom-color: var(--clr-yellow-shadow);
+
+    &:hover {
+      background-color: var(--clr-yellow-hover);
+      transition: background-color 0.1s ease-in-out;
+    }
+  }
+
+  &--silver {
+    @extend .btn-secondary;
+
+    background-color: var(--clr-silver);
+    border-bottom-color: var(--clr-silver-shadow);
+
+    &:hover {
+      background-color: var(--clr-silver-hover);
+      transition: background-color 0.1s ease-in-out;
+    }
+  }
+}
+
+.btn-restart {
+  align-items: center;
+  background-color: var(--clr-silver);
+  border-bottom: 3px solid var(--clr-silver-shadow);
+  border-radius: 5px;
+  display: flex;
+  justify-content: center;
+  min-height: 40px;
+  min-width: 40px;
+
+  @include breakpoint(medium) {
+    min-height: 52px;
+    min-width: 52px;
+  }
+
+  & > img {
+    max-height: 15px;
+    max-width: 15px;
+
+    @include breakpoint(medium) {
+      max-height: 20px;
+      max-width: 20px;
+    }
+  }
+
+  &:hover {
+    background-color: var(--clr-silver-hover);
+    transition: background-color 0.1s ease-in-out;
+  }
+}

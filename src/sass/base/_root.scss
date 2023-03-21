@@ -1,5 +1,17 @@
 :root {
   // FONTS
-  --font-primary: Arial, Helvetica, sans-serif;
+  --font-primary: 'Outfit', sans-serif;
   // COLORS
+  --clr-blue: hsl(178, 60%, 48%);
+  --clr-blue-hover: hsl(178, 75%, 65%);
+  --clr-blue-shadow: hsl(178, 78%, 31%);
+  --clr-yellow: hsl(39, 88%, 58%);
+  --clr-yellow-hover: hsl(39, 100%, 69%);
+  --clr-yellow-shadow: hsl(39, 83%, 44%);
+  --clr-dark-navy: hsl(202, 32%, 15%);
+  --clr-dark-navy-lighter: hsl(199, 35%, 19%);
+  --clr-dark-navy-shadow: hsl(201, 45%, 11%);
+  --clr-silver: hsl(198, 23%, 72%);
+  --clr-silver-hover: hsl(197, 33%, 89%);
+  --clr-silver-shadow: hsl(199, 17%, 51%);
 }
