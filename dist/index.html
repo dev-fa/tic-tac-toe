@@ -13,37 +13,37 @@
   <link rel="icon" type="image/x-icon" href="./assets/favicon.ico">
   <title>Tic Tac Toe</title>
   <link rel="stylesheet" href="./style.css">
-  <!-- <script src="main.js" defer></script> -->
+  <script src="main.js" defer></script>
 </head>
 
 <body>
   <main>
     <h1 class="sr-only">Tic-tac-toe</h1>
 
-    <!-- <section class="new-game-menu">
+    <section class="new-game-menu">
       <h2 class="sr-only">New Game Menu</h2>
       <img src="./assets/logo.svg" alt="Game Logo" class="logo">
 
       <div class="game-choice">
         <p class="game-choice__title heading-xs">PICK PLAYER 1'S MARK</p>
         <div class="game-choice__options">
-          <div class="game-choice__option">
+          <div class="game-choice__option" data-game-option="X">
             <img src="./assets/icon-x-silver.svg" alt="Choose X Option">
           </div>
-          <div class="game-choice__option--active no-hover">
-            <img src="./assets/icon-o-navy.svg" alt="Choose O Option">
+          <div class="game-choice__option" data-game-option="O">
+            <img src="./assets/icon-o-silver.svg" alt="Choose O Option">
           </div>
         </div>
         <p class="game-choice__text body-text">REMEMBER: X GOES FIRST</p>
       </div>
 
       <div class="new-game-menu__buttons">
-        <button type="button" class="btn-primary--yellow">NEW GAME (VS CPU)</button>
-        <button type="button" class="btn-primary--blue">NEW GAME (VS PLAYER)</button>
+        <button type="button" class="btn-primary--yellow" data-new-game="pvc">NEW GAME (VS CPU)</button>
+        <button type="button" class="btn-primary--blue" data-new-game="pvp">NEW GAME (VS PLAYER)</button>
       </div>
-    </section> -->
+    </section>
 
-    <section class="game-container">
+    <!-- <section class="game-container">
       <h2 class="sr-only">Game</h2>
 
       <div class="game-container__top">
@@ -85,22 +85,22 @@
           <p class="game__score heading-m">0</p>
         </div>
       </div>
-    </section>
+    </section> -->
+
+    <div class="modal" id="modal">
+      <p class="modal__text">YOU WON!</p>
+      <div class="modal__heading--blue">
+        <img src="./assets/icon-x.svg" alt="X">
+        <p>TAKES THE ROUND!</p>
+      </div>
+      <div class="modal__buttons">
+        <button type="button" class="btn-secondary--silver">QUIT</button>
+        <button type="button" class="btn-secondary--yellow">NEXT ROUND</button>
+      </div>
+    </div>
+    <div class="modal-overlay"></div>
 
   </main>
-
-  <div class="modal" id="modal">
-    <p class="modal__text">YOU WON!</p>
-    <div class="modal__heading--blue">
-      <img src="./assets/icon-x.svg" alt="X">
-      <p>TAKES THE ROUND!</p>
-    </div>
-    <div class="modal__buttons">
-      <button type="button" class="btn-secondary--silver">QUIT</button>
-      <button type="button" class="btn-secondary--yellow">NEXT ROUND</button>
-    </div>
-  </div>
-  <div class="modal-overlay"></div>
 
 </body>
 
