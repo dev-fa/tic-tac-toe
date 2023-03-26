@@ -1,9 +1,6 @@
-import gameMenu from './modules/gameMenu';
-// import GameMenu from './modules/gameMenu';
+import GameMenu from './modules/gameMenu';
+import GameUI from './modules/gameUI';
 
 (() => {
-  gameMenu.init();
-
-  // const gameMenu = new GameMenu();
-  // gameMenu.init();
+  GameMenu.init();
 })();

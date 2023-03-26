@@ -1,109 +1,154 @@
+import bus from './bus';
+
 class GameMenu {
-  #playerOneMark;
+  #xBtn;
 
-  #playerTwoMark;
+  #oBtn;
 
-  #gameMode;
+  #pvcBtn;
 
-  #xMarkBtn;
-
-  #oMarkBtn;
-
-  #newGamePvcBtn;
-
-  #newGamePvpBtn;
+  #pvpBtn;
 
   constructor() {
-    this.#playerOneMark = null;
-    this.#playerTwoMark = null;
-    this.#gameMode = null;
-  }
+    bus.on('startGame', this.#unbind.bind(this));
+    bus.on('startGame', GameMenu.unRender);
 
-  get playerOneMark() {
-    return this.#playerOneMark;
-  }
-
-  get playerTwoMark() {
-    return this.#playerTwoMark;
-  }
-
-  get gameMode() {
-    return this.#gameMode;
+    this.playerOneMark = null;
+    this.playerTwoMark = null;
+    this.gameMode = null;
   }
 
   init() {
+    GameMenu.render();
     this.#cache();
     this.#bind();
   }
 
+  static render() {
+    const main = document.querySelector('main');
+    const gameMenuContainer = document.createElement('section');
+    gameMenuContainer.classList.add('new-game-menu');
+
+    gameMenuContainer.innerHTML = `
+      <h2 class="sr-only">New Game Menu</h2>
+      <img src="./assets/logo.svg" alt="Game Logo" class="logo">
+
+      <div class="game-choice">
+        <p class="game-choice__title heading-xs">PICK PLAYER 1'S MARK</p>
+        <div class="game-choice__options">
+          <div class="game-choice__option" data-game-option="X">
+            <img src="./assets/icon-x-silver.svg" alt="Choose X Option">
+          </div>
+          <div class="game-choice__option" data-game-option="O">
+            <img src="./assets/icon-o-silver.svg" alt="Choose O Option">
+          </div>
+        </div>
+        <p class="game-choice__text body-text">REMEMBER: X GOES FIRST</p>
+      </div>
+
+      <div class="new-game-menu__buttons">
+        <button type="button" class="btn-primary--yellow" data-new-game="pvc">NEW GAME (VS CPU)</button>
+        <button type="button" class="btn-primary--blue" data-new-game="pvp">NEW GAME (VS PLAYER)</button>
+      </div>
+    `;
+
+    main.appendChild(gameMenuContainer);
+  }
+
+  static unRender() {
+    const main = document.querySelector('main');
+
+    while (main.firstChild) {
+      main.removeChild(main.lastChild);
+    }
+  }
+
   #cache() {
-    this.#xMarkBtn = document.querySelector('[data-game-option="X"]');
-    this.#oMarkBtn = document.querySelector('[data-game-option="O"');
-    this.#newGamePvcBtn = document.querySelector('[data-new-game="pvc"');
-    this.#newGamePvpBtn = document.querySelector('[data-new-game="pvp"');
+    this.#xBtn = document.querySelector('[data-game-option="X"]');
+    this.#oBtn = document.querySelector('[data-game-option="O"]');
+    this.#pvcBtn = document.querySelector('[data-new-game="pvc"]');
+    this.#pvpBtn = document.querySelector('[data-new-game="pvp"]');
   }
 
   #bind() {
-    this.#xMarkBtn.addEventListener('click', () => {
-      const mark = this.#xMarkBtn.dataset.gameOption;
-      this.#chooseMark(mark);
-      this.#setMarkButtonActive(mark);
-    });
+    this.#xBtn.addEventListener('click', this.#xBtnClick.bind(this));
+    this.#oBtn.addEventListener('click', this.#oBtnClick.bind(this));
+    this.#pvcBtn.addEventListener('click', this.#pvcBtnClick.bind(this));
+    this.#pvpBtn.addEventListener('click', this.#pvpBtnClick.bind(this));
+  }
 
-    this.#oMarkBtn.addEventListener('click', () => {
-      const mark = this.#oMarkBtn.dataset.gameOption;
-      this.#chooseMark(mark);
-      this.#setMarkButtonActive(mark);
-    });
+  #unbind() {
+    this.#xBtn.removeEventListener('click', this.#xBtnClick.bind(this));
+    this.#oBtn.removeEventListener('click', this.#oBtnClick.bind(this));
+    this.#pvcBtn.removeEventListener('click', this.#pvcBtnClick.bind(this));
+    this.#pvpBtn.removeEventListener('click', this.#pvpBtnClick.bind(this));
+  }
 
-    this.#newGamePvcBtn.addEventListener('click', () => {
-      this.#gameMode = this.#newGamePvcBtn.dataset.newGame;
-    });
+  #xBtnClick() {
+    this.#chooseMark('X');
+    this.#setMarkButtonActive('X');
+  }
 
-    this.#newGamePvpBtn.addEventListener('click', () => {
-      this.#gameMode = this.#newGamePvpBtn.dataset.newGame;
-    });
+  #oBtnClick() {
+    this.#chooseMark('O');
+    this.#setMarkButtonActive('O');
+  }
+
+  #pvcBtnClick() {
+    if (this.playerOneMark) {
+      this.gameMode = 'pvc';
+      bus.emit('startGame', {
+        playerOne: this.playerOneMark,
+        playerTwo: this.playerTwoMark,
+        mode: this.gameMode,
+      });
+    }
+  }
+
+  #pvpBtnClick() {
+    if (this.playerTwoMark) {
+      this.gameMode = 'pvp';
+      bus.emit('startGame', {
+        playerOne: this.playerOneMark,
+        playerTwo: this.playerTwoMark,
+        mode: this.gameMode,
+      });
+    }
   }
 
   #chooseMark(mark) {
-    this.#playerOneMark = mark;
+    this.playerOneMark = mark;
 
     if (mark === 'X') {
-      this.#playerTwoMark = 'O';
+      this.playerTwoMark = 'O';
     } else {
-      this.#playerTwoMark = 'X';
+      this.playerTwoMark = 'X';
     }
   }
 
   #setMarkButtonActive(mark) {
-    const xIcon = this.#xMarkBtn.querySelector('img');
-    const oIcon = this.#oMarkBtn.querySelector('img');
+    const xIcon = this.#xBtn.querySelector('img');
+    const oIcon = this.#oBtn.querySelector('img');
 
     if (mark === 'X') {
       xIcon.src = './assets/icon-x-navy.svg';
-      this.#xMarkBtn.classList.remove('game-choice__option');
-      this.#xMarkBtn.classList.add('game-choice__option--active', 'no-hover');
+      this.#xBtn.classList.remove('game-choice__option');
+      this.#xBtn.classList.add('game-choice__option--active', 'no-hover');
 
-      if (this.#oMarkBtn.classList.contains('game-choice__option--active')) {
+      if (this.#oBtn.classList.contains('game-choice__option--active')) {
         oIcon.src = './assets/icon-o-silver.svg';
-        this.#oMarkBtn.classList.remove(
-          'game-choice__option--active',
-          'no-hover'
-        );
-        this.#oMarkBtn.classList.add('game-choice__option');
+        this.#oBtn.classList.remove('game-choice__option--active', 'no-hover');
+        this.#oBtn.classList.add('game-choice__option');
       }
     } else {
       oIcon.src = './assets/icon-o-navy.svg';
-      this.#oMarkBtn.classList.remove('game-choice__option');
-      this.#oMarkBtn.classList.add('game-choice__option--active', 'no-hover');
+      this.#oBtn.classList.remove('game-choice__option');
+      this.#oBtn.classList.add('game-choice__option--active', 'no-hover');
 
-      if (this.#xMarkBtn.classList.contains('game-choice__option--active')) {
+      if (this.#xBtn.classList.contains('game-choice__option--active')) {
         xIcon.src = './assets/icon-x-silver.svg';
-        this.#xMarkBtn.classList.remove(
-          'game-choice__option--active',
-          'no-hover'
-        );
-        this.#xMarkBtn.classList.add('game-choice__option');
+        this.#xBtn.classList.remove('game-choice__option--active', 'no-hover');
+        this.#xBtn.classList.add('game-choice__option');
       }
     }
   }
