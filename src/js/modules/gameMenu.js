@@ -96,12 +96,13 @@ class GameMenu {
 
   #pvcBtnClick() {
     if (this.playerOneMark) {
-      this.gameMode = 'pvc';
-      bus.emit('startGame', {
-        playerOne: this.playerOneMark,
-        playerTwo: this.playerTwoMark,
-        mode: this.gameMode,
-      });
+      // this.gameMode = 'pvc';
+      // bus.emit('startGame', {
+      //   playerOne: this.playerOneMark,
+      //   playerTwo: this.playerTwoMark,
+      //   mode: this.gameMode,
+      // });
+      console.log('W.I.P');
     }
   }
 

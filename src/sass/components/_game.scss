@@ -15,6 +15,7 @@
     background-color: var(--clr-dark-navy-lighter);
     border-bottom: 8px solid var(--clr-dark-navy-shadow);
     border-radius: 10px;
+    cursor: pointer;
     display: flex;
     justify-content: center;
     min-height: 96px;
@@ -25,9 +26,18 @@
       min-width: 140px;
     }
 
+    &:hover {
+      & > img {
+        opacity: 1;
+      }
+    }
+
     & > img {
       max-height: 40px;
       max-width: 40px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.1s ease-in-out;
 
       @include breakpoint(medium) {
         max-height: 64px;
