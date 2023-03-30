@@ -1,6 +1,4 @@
 import bus from './bus';
-import game from './tictactoe';
-import modal from './modal';
 
 class GameUI {
   #xName;
@@ -21,17 +19,6 @@ class GameUI {
     bus.on('startGame', this.init.bind(this));
     bus.on('nextTurn', this.#setTurnImg.bind(this));
     bus.on('nextTurn', this.#setBoxImg.bind(this));
-    bus.on('gameOver', this.test);
-  }
-
-  test(winner) {
-    if (winner !== 'tie') {
-      console.log(`${winner} TAKES THE ROUND`);
-      modal.openModal();
-    } else {
-      console.log('ROUND TIED');
-      modal.openModal();
-    }
   }
 
   init(data) {

@@ -49,8 +49,6 @@ class TicTacToe {
       this.currentPlayer = this.currentPlayer === 'X' ? 'O' : 'X';
     }
 
-    console.table(this.board);
-
     return true;
   }
 
