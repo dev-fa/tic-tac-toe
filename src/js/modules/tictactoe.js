@@ -49,6 +49,8 @@ class TicTacToe {
       this.currentPlayer = this.currentPlayer === 'X' ? 'O' : 'X';
     }
 
+    console.table(this.board);
+
     return true;
   }
 
@@ -58,9 +60,9 @@ class TicTacToe {
     const diagonals = [[], []];
 
     for (let i = 0; i < 3; i += 1) {
-      cols[0].push(this.board[0][i]);
-      cols[1].push(this.board[1][i]);
-      cols[2].push(this.board[2][i]);
+      for (let j = 0; j < 3; j += 1) {
+        cols[j].push(this.board[i][j]);
+      }
       diagonals[0].push(this.board[i][i]);
       diagonals[1].push(this.board[i][2 - i]);
     }

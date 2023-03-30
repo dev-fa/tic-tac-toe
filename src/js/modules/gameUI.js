@@ -1,5 +1,6 @@
 import bus from './bus';
 import game from './tictactoe';
+import modal from './modal';
 
 class GameUI {
   #xName;
@@ -26,8 +27,10 @@ class GameUI {
   test(winner) {
     if (winner !== 'tie') {
       console.log(`${winner} TAKES THE ROUND`);
+      modal.openModal();
     } else {
       console.log('ROUND TIED');
+      modal.openModal();
     }
   }
 
