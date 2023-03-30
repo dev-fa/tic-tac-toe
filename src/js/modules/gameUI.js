@@ -1,4 +1,5 @@
 import bus from './bus';
+import game from './tictactoe';
 
 class GameUI {
   #xName;
@@ -19,6 +20,15 @@ class GameUI {
     bus.on('startGame', this.init.bind(this));
     bus.on('nextTurn', this.#setTurnImg.bind(this));
     bus.on('nextTurn', this.#setBoxImg.bind(this));
+    bus.on('gameOver', this.test);
+  }
+
+  test(winner) {
+    if (winner !== 'tie') {
+      console.log(`${winner} TAKES THE ROUND`);
+    } else {
+      console.log('ROUND TIED');
+    }
   }
 
   init(data) {
@@ -160,6 +170,7 @@ class GameUI {
 
   #chooseMove(e) {
     if (e.target.dataset.gameGrid) {
+      // UI Related
       const box = e.target;
       const boxImg = box.querySelector('img');
       boxImg.src = `./assets/icon-${this.turn.toLowerCase()}.svg`;
@@ -167,6 +178,9 @@ class GameUI {
       boxImg.style.opacity = '1';
       delete boxImg.dataset.boxImg;
       this.#changeTurn();
+      // Game Related
+      const turnCords = box.dataset.gameGrid.split('-');
+      bus.emit('play', turnCords);
     }
   }
 
