@@ -6,6 +6,7 @@ class Modal {
   constructor() {
     bus.on('startGame', this.getPlayerOne.bind(this));
     bus.on('gameOver', this.updateModal.bind(this));
+    bus.on('restart', this.updateModal.bind(this));
 
     this.modal = document.getElementById('modal');
     this.modalOverlay = document.getElementById('modal-overlay');
@@ -13,6 +14,8 @@ class Modal {
     this.modalHeading = null;
     this.modalHeadingContainer = null;
     this.modalHeadingImg = null;
+    this.modalButtonSilver = null;
+    this.modalButtonYellow = null;
   }
 
   getPlayerOne(data) {
@@ -31,6 +34,9 @@ class Modal {
       this.modalSubText.textContent = 'PLAYER 2 WINS!';
     }
     this.modalHeading.textContent = 'TAKES THE ROUND';
+
+    this.modalButtonSilver.textContent = 'QUIT';
+    this.modalButtonYellow.textContent = 'NEXT ROUND';
   }
 
   #oWinnerModal() {
@@ -45,6 +51,9 @@ class Modal {
       this.modalSubText.textContent = 'PLAYER 2 WINS!';
     }
     this.modalHeading.textContent = 'TAKES THE ROUND';
+
+    this.modalButtonSilver.textContent = 'QUIT';
+    this.modalButtonYellow.textContent = 'NEXT ROUND';
   }
 
   #tieModal() {
@@ -56,6 +65,17 @@ class Modal {
     this.modalHeadingImg.setAttribute('alt', '');
     this.modalSubText.textContent = '';
     this.modalHeading.textContent = 'ROUND TIED';
+
+    this.modalButtonSilver.textContent = 'QUIT';
+    this.modalButtonYellow.textContent = 'NEXT ROUND';
+  }
+
+  #restartModal() {
+    this.modalHeadingContainer.classList.remove('modal__heading');
+    this.modalHeadingContainer.classList.add('modal__heading--silver');
+    this.modalHeading.textContent = 'RESTART GAME?';
+    this.modalButtonSilver.textContent = 'NO, CANCEL';
+    this.modalButtonYellow.textContent = 'YES, RESTART';
   }
 
   updateModal(winner) {
@@ -63,6 +83,8 @@ class Modal {
     this.modalHeading = document.getElementById('modal-heading');
     this.modalHeadingContainer = document.getElementById('modal-heading-cont');
     this.modalHeadingImg = document.getElementById('modal-img');
+    this.modalButtonSilver = document.querySelector('[data-modal-btn-silver]');
+    this.modalButtonYellow = document.querySelector('[data-modal-btn-yellow]');
 
     this.modalHeadingContainer.classList.remove(
       ...this.modalHeadingContainer.classList
@@ -73,8 +95,10 @@ class Modal {
       this.#xWinnerModal();
     } else if (winner === 'O') {
       this.#oWinnerModal();
-    } else {
+    } else if (winner === 'tie') {
       this.#tieModal();
+    } else {
+      this.#restartModal();
     }
 
     this.openModal();

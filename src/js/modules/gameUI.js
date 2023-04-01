@@ -15,6 +15,8 @@ class GameUI {
 
   #gameContainer;
 
+  #btnRestart;
+
   constructor() {
     bus.on('startGame', this.init.bind(this));
     bus.on('nextTurn', this.#setTurnImg.bind(this));
@@ -49,7 +51,7 @@ class GameUI {
             <img src="" alt="" data-turn-img>
             <p class="game-turn__text">TURN</p>
         </div>
-        <button type="button" class="btn-restart" aria-label="Restart game">
+        <button type="button" class="btn-restart" aria-label="Restart game" data-btn-restart>
             <img src="./assets/icon-restart.svg" alt="Restart game">
         </button>
         </div>
@@ -117,10 +119,12 @@ class GameUI {
     this.#oWins = document.querySelector('[data-o-wins]');
     this.#ties = document.querySelector('[data-ties]');
     this.#gameContainer = document.querySelector('[data-game-container]');
+    this.#btnRestart = document.querySelector('[data-btn-restart]');
   }
 
   #bind() {
     this.#gameContainer.addEventListener('click', this.#chooseMove.bind(this));
+    this.#btnRestart.addEventListener('click', this.#restart.bind(this));
   }
 
   #unbind() {
@@ -128,6 +132,27 @@ class GameUI {
       'click',
       this.#chooseMove.bind(this)
     );
+    this.#btnRestart.removeEventListener('click', this.#restart.bind(this));
+  }
+
+  #chooseMove(e) {
+    if (e.target.dataset.gameGrid) {
+      // UI Related
+      const box = e.target;
+      const boxImg = box.querySelector('img');
+      boxImg.src = `./assets/icon-${this.turn.toLowerCase()}.svg`;
+      box.classList.add('no-hover');
+      boxImg.style.opacity = '1';
+      delete boxImg.dataset.boxImg;
+      this.#changeTurn();
+      // Game Related
+      const turnCords = box.dataset.gameGrid.split('-');
+      bus.emit('play', turnCords);
+    }
+  }
+
+  #restart() {
+    bus.emit('restart', null);
   }
 
   #setTurnImg() {
@@ -156,22 +181,6 @@ class GameUI {
       // eslint-disable-next-line no-param-reassign
       boxImg.src = `./assets/icon-${this.turn.toLowerCase()}-outline.svg`;
     });
-  }
-
-  #chooseMove(e) {
-    if (e.target.dataset.gameGrid) {
-      // UI Related
-      const box = e.target;
-      const boxImg = box.querySelector('img');
-      boxImg.src = `./assets/icon-${this.turn.toLowerCase()}.svg`;
-      box.classList.add('no-hover');
-      boxImg.style.opacity = '1';
-      delete boxImg.dataset.boxImg;
-      this.#changeTurn();
-      // Game Related
-      const turnCords = box.dataset.gameGrid.split('-');
-      bus.emit('play', turnCords);
-    }
   }
 
   #changeTurn() {
