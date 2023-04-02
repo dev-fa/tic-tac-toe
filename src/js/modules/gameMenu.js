@@ -12,13 +12,14 @@ class GameMenu {
   constructor() {
     bus.on('startGame', this.#unbind.bind(this));
     bus.on('startGame', GameMenu.unRender);
-
-    this.playerOneMark = null;
-    this.playerTwoMark = null;
-    this.gameMode = null;
+    bus.on('startGame', this.#unbind.bind(this));
+    bus.on('quit2', this.init.bind(this));
   }
 
   init() {
+    this.playerOneMark = null;
+    this.playerTwoMark = null;
+    this.gameMode = null;
     GameMenu.render();
     this.#cache();
     this.#bind();

@@ -6,10 +6,8 @@ class Modal {
   constructor() {
     bus.on('startGame', this.getPlayerOne.bind(this));
     bus.on('gameOver', this.updateModal.bind(this));
-    bus.on('restart', this.updateModal.bind(this));
+    bus.on('restartModal', this.updateModal.bind(this));
 
-    this.modal = document.getElementById('modal');
-    this.modalOverlay = document.getElementById('modal-overlay');
     this.modalSubText = null;
     this.modalHeading = null;
     this.modalHeadingContainer = null;
@@ -71,11 +69,46 @@ class Modal {
   }
 
   #restartModal() {
+    this.modalHeadingImg.src = '.';
+    this.modalHeadingImg.setAttribute('alt', '');
+    this.modalSubText.textContent = '';
     this.modalHeadingContainer.classList.remove('modal__heading');
     this.modalHeadingContainer.classList.add('modal__heading--silver');
     this.modalHeading.textContent = 'RESTART GAME?';
     this.modalButtonSilver.textContent = 'NO, CANCEL';
     this.modalButtonYellow.textContent = 'YES, RESTART';
+  }
+
+  #bindGameButtons() {
+    this.#unBindRestartButtons();
+    this.modalButtonYellow.addEventListener(
+      'click',
+      Modal.handleNextRoundClick
+    );
+    this.modalButtonSilver.addEventListener('click', Modal.handleQuitClick);
+  }
+
+  #unBindGameButtons() {
+    this.modalButtonYellow.removeEventListener(
+      'click',
+      Modal.handleNextRoundClick
+    );
+    this.modalButtonSilver.removeEventListener('click', Modal.handleQuitClick);
+  }
+
+  #bindRestartButtons() {
+    this.#unBindGameButtons();
+    this.modalButtonYellow.addEventListener('click', Modal.handleRestartClick);
+    this.modalButtonSilver.addEventListener('click', Modal.closeModal);
+  }
+
+  #unBindRestartButtons() {
+    this.modalButtonYellow.removeEventListener(
+      'click',
+      Modal.handleRestartClick
+    );
+
+    this.modalButtonSilver.removeEventListener('click', Modal.closeModal);
   }
 
   updateModal(winner) {
@@ -90,35 +123,62 @@ class Modal {
       ...this.modalHeadingContainer.classList
     );
     this.modalHeadingContainer.classList.add('modal__heading');
+    this.modalHeadingContainer.style = '';
 
     if (winner === 'X') {
       this.#xWinnerModal();
+      this.#bindGameButtons();
     } else if (winner === 'O') {
       this.#oWinnerModal();
+      this.#bindGameButtons();
     } else if (winner === 'tie') {
       this.#tieModal();
+      this.#bindGameButtons();
     } else {
       this.#restartModal();
+      this.#bindRestartButtons();
     }
 
-    this.openModal();
+    Modal.openModal();
   }
 
-  openModal() {
-    if (this.modal === null) return false;
-    this.modal.classList.remove('modal');
-    this.modalOverlay.classList.remove('modal-overlay');
-    this.modal.classList.add('modal--active');
-    this.modalOverlay.classList.add('modal-overlay--active');
+  static handleNextRoundClick() {
+    bus.emit('nextRound');
+    Modal.closeModal();
+  }
+
+  static handleQuitClick() {
+    bus.emit('quit');
+    Modal.closeModal();
+  }
+
+  static handleRestartClick() {
+    bus.emit('restartGame');
+    Modal.closeModal();
+  }
+
+  static openModal() {
+    const modal = document.getElementById('modal');
+    const modalOverlay = document.getElementById('modal-overlay');
+
+    if (modal === null) return false;
+    modal.classList.remove('modal');
+    modalOverlay.classList.remove('modal-overlay');
+    modal.classList.add('modal--active');
+    modalOverlay.classList.add('modal-overlay--active');
+
     return true;
   }
 
-  closeModal() {
-    if (this.modal === null) return false;
-    this.modal.classList.remove('modal--active');
-    this.modalOverlay.classList.remove('modal-overlay--active');
-    this.modal.classList.add('modal');
-    this.modalOverlay.classList.add('modal-overlay');
+  static closeModal() {
+    const modal = document.getElementById('modal');
+    const modalOverlay = document.getElementById('modal-overlay');
+
+    if (modal === null) return false;
+    modal.classList.remove('modal--active');
+    modalOverlay.classList.remove('modal-overlay--active');
+    modal.classList.add('modal');
+    modalOverlay.classList.add('modal-overlay');
     return true;
   }
 }

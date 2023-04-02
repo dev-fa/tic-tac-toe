@@ -5,6 +5,9 @@ class TicTacToe {
     bus.on('play', (cords) => {
       this.play(cords[0], cords[1]);
     });
+    bus.on('restartGame', this.reset.bind(this));
+    bus.on('nextRound', this.reset.bind(this));
+    bus.on('quit', this.reset.bind(this));
 
     this.board = [
       [null, null, null],

@@ -1,3 +1,4 @@
+/* eslint-disable no-param-reassign */
 import bus from './bus';
 
 class GameUI {
@@ -11,6 +12,12 @@ class GameUI {
 
   #ties;
 
+  #xWinsBoard;
+
+  #oWinsBoard;
+
+  #tiesBoard;
+
   #turnImg;
 
   #gameContainer;
@@ -21,9 +28,18 @@ class GameUI {
     bus.on('startGame', this.init.bind(this));
     bus.on('nextTurn', this.#setTurnImg.bind(this));
     bus.on('nextTurn', this.#setBoxImg.bind(this));
+    bus.on('restartGame', this.#restartBoard.bind(this));
+    bus.on('restartGame', this.#restartScore.bind(this));
+    bus.on('gameOver', this.#updateScore.bind(this));
+    bus.on('nextRound', this.#restartBoard.bind(this));
+    bus.on('quit', GameUI.unRender);
+    bus.on('quit', this.#unbind.bind(this));
   }
 
   init(data) {
+    this.#xWins = 0;
+    this.#oWins = 0;
+    this.#ties = 0;
     this.playerOne = data.playerOne;
     this.playerTwo = data.playerTwo;
     this.gameMode = data.mode;
@@ -109,22 +125,24 @@ class GameUI {
     while (main.firstChild) {
       main.removeChild(main.lastChild);
     }
+
+    bus.emit('quit2');
   }
 
   #cache() {
     this.#turnImg = document.querySelector('[data-turn-img]');
     this.#xName = document.querySelector('[data-x-name]');
     this.#oName = document.querySelector('[data-o-name]');
-    this.#xWins = document.querySelector('[data-x-wins]');
-    this.#oWins = document.querySelector('[data-o-wins]');
-    this.#ties = document.querySelector('[data-ties]');
+    this.#xWinsBoard = document.querySelector('[data-x-wins]');
+    this.#oWinsBoard = document.querySelector('[data-o-wins]');
+    this.#tiesBoard = document.querySelector('[data-ties]');
     this.#gameContainer = document.querySelector('[data-game-container]');
     this.#btnRestart = document.querySelector('[data-btn-restart]');
   }
 
   #bind() {
     this.#gameContainer.addEventListener('click', this.#chooseMove.bind(this));
-    this.#btnRestart.addEventListener('click', this.#restart.bind(this));
+    this.#btnRestart.addEventListener('click', GameUI.handleRestartButton);
   }
 
   #unbind() {
@@ -132,7 +150,7 @@ class GameUI {
       'click',
       this.#chooseMove.bind(this)
     );
-    this.#btnRestart.removeEventListener('click', this.#restart.bind(this));
+    this.#btnRestart.removeEventListener('click', GameUI.handleRestartButton);
   }
 
   #chooseMove(e) {
@@ -149,10 +167,6 @@ class GameUI {
       const turnCords = box.dataset.gameGrid.split('-');
       bus.emit('play', turnCords);
     }
-  }
-
-  #restart() {
-    bus.emit('restart', null);
   }
 
   #setTurnImg() {
@@ -175,6 +189,32 @@ class GameUI {
     }
   }
 
+  #updateScore(winner) {
+    if (winner === 'X') {
+      this.#xWins += 1;
+    } else if (winner === 'O') {
+      this.#oWins += 1;
+    } else if (winner === 'tie') {
+      this.#ties += 1;
+    }
+
+    this.#updateScoreBoard();
+  }
+
+  #updateScoreBoard() {
+    this.#xWinsBoard.textContent = this.#xWins;
+    this.#oWinsBoard.textContent = this.#oWins;
+    this.#tiesBoard.textContent = this.#ties;
+  }
+
+  #restartScore() {
+    this.#xWins = 0;
+    this.#oWins = 0;
+    this.#ties = 0;
+
+    this.#updateScoreBoard();
+  }
+
   #setBoxImg() {
     const boxImgs = document.querySelectorAll('[data-box-img]');
     boxImgs.forEach((boxImg) => {
@@ -190,6 +230,30 @@ class GameUI {
       this.turn = 'X';
     }
     bus.emit('nextTurn', this.turn);
+  }
+
+  #restartBoard() {
+    this.turn = 'X';
+    this.#setTurnImg();
+    const boxes = document.querySelectorAll('[data-game-grid]');
+
+    boxes.forEach((box) => {
+      const images = box.querySelectorAll('img');
+      images.forEach((image) => {
+        image.setAttribute('data-box-img', '');
+        image.src = '';
+        image.style = '';
+      });
+      if (box.classList.contains('no-hover')) {
+        box.classList.remove('no-hover');
+      }
+    });
+
+    this.#setBoxImg();
+  }
+
+  static handleRestartButton() {
+    bus.emit('restartModal', null);
   }
 }
 
